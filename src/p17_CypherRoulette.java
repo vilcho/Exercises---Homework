@@ -12,21 +12,31 @@ public class p17_CypherRoulette {
 
         String cypherString = "";
         String previousText = "";
+        int spinCount = 0;
 
         for (int i = 1; i <= N; i++) {
             String text = scanner.nextLine();
-            if (!Objects.equals(text, "spin") && !(previousText.equals(text)) && !(previousText.equals("spin"))) {
-                cypherString = cypherString.concat(text);
-            }
-            if (text.equals("spin")) {
-                N = N + 1;
-            }
-            if (previousText.equals("spin")) {
-                cypherString = text.concat(cypherString);
-            }
+
             if (previousText.equals(text)) {
                 cypherString = "";
+                //spinCount = 0;
+                //previousText = "";
+
+                if (text.equals("spin")) {
+                    N = N + 1;
+                    continue;
+                }
+            } else if (text.equals("spin")) {
+                N += 1;
+                spinCount++;
+            } else if (!Objects.equals(text, "spin") && !(previousText.equals(text))) {
+                if (spinCount % 2 == 0) {
+                    cypherString = cypherString.concat(text);
+                } else {
+                    cypherString = text.concat(cypherString);
+                }
             }
+            //}
             previousText = text;
         }
         System.out.println(cypherString);
